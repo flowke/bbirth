@@ -5,7 +5,7 @@ const { anyToString, urlParamsToObj } = require('./utils');
 
 module.exports = (req, res) => {
   const { pathname, query } = parse(req.url);
-
+  console.log('request', req.url);
   // Filter requests
   if (
     !['/', '/favicon.ico'].includes(pathname) &&

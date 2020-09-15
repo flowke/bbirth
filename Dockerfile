@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-MAINTAINER Black-Hole<158blackhole@gmail.com>
+
 
 # set sources
 RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
@@ -40,7 +40,8 @@ RUN apt-get install -yq libnss3
 RUN apt-get install -yq libxss1
 
 # install chrome()
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
+RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add
+# RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
 RUN sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
 RUN apt-get update
 RUN apt-get install -yq google-chrome-stable
@@ -55,7 +56,7 @@ ENV LANGUAGE zh_CN:zh
 ENV LC_ALL zh_CN.UTF-8
 
 # The url to be recorded
-ARG MATERIAL_URL="https://github.com/"
+ARG MATERIAL_URL=""
 ENV MATERIAL_URL=$MATERIAL_URL
 
 # Maximum recording time (default is two hours)
@@ -77,6 +78,7 @@ WORKDIR /etc/www
 
 # configuration development environment
 COPY src ./
+RUN npm config set registry https://registry.npm.taobao.org
 RUN npm install --production
 
 COPY entrypoint.sh ./
