@@ -11,23 +11,15 @@
     "build": "npm run eslint && cross-env NODE_ENV=production webpack --config webpack.config.js",
     "eslint": "eslint --fix --ext .ts chrome-extension"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alo7/rebirth.git"
-  },
   "keywords": [
     "record",
     "rebirth"
   ],
-  "author": "Black-Hole <158blackhole@gmail.com>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/alo7/rebirth/issues"
-  },
-  "homepage": "https://github.com/alo7/rebirth#readme",
   "dependencies": {
     "is-docker": "^2.0.0",
     "puppeteer-core": "^2.0.0",
+    "qs": "^6.9.4",
     "winston": "^3.2.1",
     "ws": "^7.2.0"
   },

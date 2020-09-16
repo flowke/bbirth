@@ -17,6 +17,11 @@ const getRecordTasksAndStartTab = () => {
         sendLog('open url', {
           recordInfo: data
         });
+          // 告知可以开始录制
+          chrome.tabs.sendMessage(id, {
+            isRecordingPage: 'yes',
+            hasReady: 'yes'
+          });
 
         // If the init function is not called within 5 minutes, the task is considered to have failed
         const initTimeoutId = setTimeout(() => {

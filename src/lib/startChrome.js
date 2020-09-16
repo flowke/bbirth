@@ -3,6 +3,7 @@ const listenCrash = require('./listenCrash');
 const servicesStatus = require('./servicesStatus');
 const { loggerServer } = require('./log');
 const { CHROME_PATH, USER_DATA_DIR, EXTENSIONS_DIR } = require('./constants');
+const event = require('./events');
 
 const options = {
   headless: false,
@@ -28,6 +29,41 @@ const options = {
 
 module.exports = async () => {
   const browser = await puppeteer.launch(options);
+
+  browser.on('targetcreated', (target)=>{
+    target.page()
+    .then(page=>{
+      if(!page) return;
+
+      // 录制页才会执行, 并获得监听停止能力
+      page.exposeFunction('listenStop', ()=>{
+
+        event.onRecordStop(()=>{
+          page.evaluate(()=>{
+            window.rebirth && window.rebirth.stop();
+          })
+        })
+
+      })
+
+      // 执行初始化, 开始录制, 并启动监听停止
+      page.evaluate(()=>{
+        // 等待插件告知
+        window.addEventListener('message',(e=>{
+          // 确定是录制页面
+          if (!e.data || !e.data.isRecordingPage) return;
+          window.listenStop();
+          // 可以开始录制
+          if(e.data.hasReady){
+            window.rebirth && window.rebirth.init();
+            window.rebirth && window.rebirth.start();
+          }
+        }), false)
+      })
+
+    })
+  })
+
   const pages = await browser.pages();
   const page = pages[0];
   await page.goto('http://127.0.0.1');

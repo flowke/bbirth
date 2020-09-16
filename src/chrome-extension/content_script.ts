@@ -20,6 +20,13 @@ if (typeof chrome.runtime.id !== 'undefined') {
       injectedScript.src = chrome.extension.getURL('injected.js');
       (document.head || document.documentElement).appendChild(injectedScript);
     }
+
+    if (msg.isRecordingPage && msg.hasReady) {
+      setTimeout(() => {
+        window.postMessage(msg, '*');
+      }, 1500);
+
+    }
   });
 
   // The message of the webpage message is forwarded to the plug-in for processing.

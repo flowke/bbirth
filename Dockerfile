@@ -90,6 +90,9 @@ EXPOSE 9223
 # VNC Port
 EXPOSE 5920
 
+# node server port
+EXPOSE 80
+
 ONBUILD ENTRYPOINT ["/etc/www/entrypoint.sh"]
 
 ENTRYPOINT ["/etc/www/entrypoint.sh"]

@@ -57,7 +57,7 @@ After the webpage is loaded, some api will be injected for the webpage to use.
 
 ```javascript
 // Initialize the API (if not called within 5 minutes, the task is considered to have failed) to ensure that the web page can be opened normally.
-rebirth.init();
+// 之后开始注入脚本
 
 // start record
 rebirth.start();
