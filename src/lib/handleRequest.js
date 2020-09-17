@@ -2,18 +2,22 @@ const { parse } = require('url');
 const routers = require('./routers');
 const { CONTENT_TYPE_JSON } = require('./constants');
 const { anyToString, urlParamsToObj } = require('./utils');
-
+const {
+  loggerServer
+} = require('./log');
 module.exports = (req, res) => {
   const { pathname, query } = parse(req.url);
-  console.log('request', req.url);
+  
+  loggerServer.info('request' + req.url);
   // Filter requests
-  if (
-    !['/', '/favicon.ico'].includes(pathname) &&
-    req.headers.origin !== 'chrome-extension://cnlcagjlokccajjeehpfccjlkgflmmgj' &&
-    req.headers.referer !== 'http://127.0.0.1/'
-  ) {
-    return;
-  }
+  // if (
+  //   !['/', '/favicon.ico'].includes(pathname) &&
+  //   req.headers.origin !== 'chrome-extension://cnlcagjlokccajjeehpfccjlkgflmmgj' &&
+  //   req.headers.referer !== 'http://127.0.0.1/'
+  // ) {
+  //   res.end('fultered')
+  //   return;
+  // }
 
   req.pathname = pathname;
   req.query = urlParamsToObj(query);

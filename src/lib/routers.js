@@ -5,6 +5,9 @@ const logHandle = require('../controllers/logHandle');
 const action = require('../controllers/action');
 const recordFail = require('../controllers/recordFail');
 const completeRecord = require('../controllers/completeRecord');
+const {
+  loggerServer
+} = require('./log');
 
 module.exports = (req, res) => {
   const router = {
@@ -22,10 +25,12 @@ module.exports = (req, res) => {
 
   const routerController = router[req.pathname];
   if (typeof routerController === 'undefined') {
+    res.end('nothing')
     return;
 
   }
-  if (['/', '/getRecord', '/logHandle'].includes(req.pathname)) {
+  loggerServer.info('find routerController ' + req.pathname)
+  if (['/', '/getRecord', '/logHandle', '/action'].includes(req.pathname)) {
     return routerController(req, res);
   }
 

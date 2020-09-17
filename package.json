@@ -19,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/alo7/rebirth/issues"
   },
-  "homepage": "https://github.com/alo7/rebirth#readme"
+  "homepage": "https://github.com/alo7/rebirth#readme",
+  "dependencies": {
+    "decode-uri-component": "^0.2.0",
+    "get-port": "^5.1.1"
+  }
 }
